@@ -1,10 +1,10 @@
 """
 Usage:
   # Create train data:
-  python3 generate_tfrecord.py --csv_input=data/train_labels.csv  --output_path=data/train.record
+  python3 generate_tfrecord.py --csv_input=data/labels/train_labels.csv  --output_path=train.record
 
   # Create test data:
-  python3 generate_tfrecord.py --csv_input=data/test_labels.csv  --output_path=data/test.record
+  python3 generate_tfrecord.py --csv_input=data/labels/test_labels.csv  --output_path=test.record
 """
 from __future__ import division
 from __future__ import print_function
@@ -23,7 +23,7 @@ from collections import namedtuple, OrderedDict
 flags = tf.app.flags
 flags.DEFINE_string('csv_input', '', 'Path to the CSV input')
 flags.DEFINE_string('output_path', '', 'Path to output TFRecord')
-flags.DEFINE_string('label_map_path', 'training/label_map.pbtxt', 'Path to label map proto')
+flags.DEFINE_string('label_map_path', 'data/label_map.pbtxt', 'Path to label map proto')
 FLAGS = flags.FLAGS
 
 
@@ -76,7 +76,7 @@ def create_tf_example(group, path, label_map_dict):
 
 def main(_):
     writer = tf.python_io.TFRecordWriter(FLAGS.output_path)
-    path = os.path.join(os.getcwd(), 'images')
+    path = os.path.join(os.getcwd(), 'data/images')
     examples = pd.read_csv(FLAGS.csv_input)
     grouped = split(examples, 'filename')
     label_map_dict = label_map_util.get_label_map_dict(FLAGS.label_map_path)
