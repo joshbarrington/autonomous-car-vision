@@ -1,10 +1,19 @@
+# This script has been modified from the one available here:
+# https://github.com/datitran/raccoon_dataset/blob/master/generate_tfrecord.py
 """
-Usage:
+Script to generate TFRecord files from a CSV file containing groundtruth data and the
+corresponding image files.
+
+Example usage:
   # Create train data:
-  python3 generate_tfrecord.py --csv_input=data/labels/train_labels.csv  --output_path=train.record
+  python3 generate_tfrecord.py \
+    --csv_input=data/labels/train_labels.csv \
+    --output_path=data/train.record
 
   # Create test data:
-  python3 generate_tfrecord.py --csv_input=data/labels/test_labels.csv  --output_path=test.record
+  python3 generate_tfrecord.py \
+    --csv_input=data/labels/test_labels.csv \
+    --output_path=data/test.record
 """
 from __future__ import division
 from __future__ import print_function
@@ -18,7 +27,7 @@ import tensorflow as tf
 from PIL import Image
 from object_detection.utils import dataset_util
 from object_detection.utils import label_map_util
-from collections import namedtuple, OrderedDict
+from collections import namedtuple
 
 flags = tf.app.flags
 flags.DEFINE_string('csv_input', '', 'Path to the CSV input')
